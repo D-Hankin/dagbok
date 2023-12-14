@@ -17,5 +17,10 @@ public interface DiaryRepository extends CrudRepository<Diary, Integer> {
     @Modifying
     @Query("UPDATE Diary e SET e.deleted = 1 WHERE e.id = ?1")
     int softDelete(int id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Diary e SET e.deleted = 0 WHERE e.id = ?1")
+    int undoLastDelete(int id);
     
 }

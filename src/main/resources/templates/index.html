@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
     <title>Diary of Dominion</title>
 </head>
 <body>
@@ -19,7 +20,20 @@
             <span th:text="${#temporals.format(entry.datetime, 'dd/mm-yy, HH:mm')}"></span>
             <span th:text="${entry.entry}"></span>
             <a th:href="@{/delete-entry(id=${entry.id})}">[X]</a>
+            <a class="editButtons" th:id="${entry.id}">[edit]</a>
+            <label class="idNumberLabels" th:text="${entry.id}"></label>
         </li>
+        <form th:action="@{/undo-last-delete}">
+            <button>Undo Last Delete</button>
+        </form>
     </ul>
+    <div id="editBox">
+        <form>
+            <label>Need to remove some evidence? Go ahead...</label>
+            <input type="text" name="updatedText">
+            <button>Save</button>
+            <button>Cancel</button>
+        </form>
+    </div>
 </body>
 </html>
