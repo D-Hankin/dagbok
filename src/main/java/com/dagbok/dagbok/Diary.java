@@ -1,5 +1,8 @@
 package com.dagbok.dagbok;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +19,9 @@ public class Diary {
     private int id;
     private String entry;
     private int deleted;
+    @Column(columnDefinition = "DATETIME(0)")
+    private LocalDateTime datetime;
+    
     
     public int getId() {
         return id;
@@ -34,6 +40,12 @@ public class Diary {
     }
     public void setDeleted(int deleted) {
         this.deleted = deleted;
+    }
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
     }
 
     

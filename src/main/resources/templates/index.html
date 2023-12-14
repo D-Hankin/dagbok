@@ -16,6 +16,7 @@
     </div>
     <ul>
         <li th:each="entry : ${diaryEntries}">
+            <span th:text="${#temporals.format(entry.datetime, 'dd/mm-yy, HH:mm')}"></span>
             <span th:text="${entry.entry}"></span>
             <a th:href="@{/delete-entry(id=${entry.id})}">[X]</a>
         </li>
