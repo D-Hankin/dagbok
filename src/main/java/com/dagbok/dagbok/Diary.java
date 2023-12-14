@@ -1,7 +1,5 @@
 package com.dagbok.dagbok;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +15,6 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String entry;
-    private Timestamp timeStamp;
     private int deleted;
     
     public int getId() {
@@ -31,12 +28,6 @@ public class Diary {
     }
     public void setEntry(String entry) {
         this.entry = entry;
-    }
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
     }
     public int getDeleted() {
         return deleted;

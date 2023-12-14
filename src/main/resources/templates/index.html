@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary of Dominion</title>
+</head>
+<body>
+    <h1>Welcome Overlord</h1>
+    <h2>What devastation have you wrought recently?</h2>
+    <div>
+        <form method="post" th:action="@{/new-entry}">
+            <input type="text" name="newEntry">
+            <button>Save</button>
+        </form>
+    </div>
+    <ul>
+        <li th:each="entry : ${diaryEntries}">
+            <span th:text="${entry.entry}"></span>
+            <a th:href="@{/delete-entry(id=${entry.id})}">[X]</a>
+        </li>
+    </ul>
+</body>
+</html>
