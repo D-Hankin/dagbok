@@ -15,16 +15,11 @@ for (let i = 0; i < editButtonArray.length; i++) {
     console.log(singleButton);
     editButtonArray[i].addEventListener("click", () => {
         console.log("click");
+        document.getElementById("editBox").style.display = "block";
     })
 }
 
 console.log(idNumber);
 console.log(editButtonsValues);
-/*for (let i = 0; i < editButtonsValues.length; i++) {
-    let singleButton = document.getElementById(editButtonsValues[i]);
-    console.log(editButtonsValues[i]);
-    singleButton.addEventListener("click", () => {
-        console.log("click");
-    })
-}*/
+
 
