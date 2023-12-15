@@ -6,6 +6,8 @@ const itemIdTd = document.getElementsByClassName("itemIdTd");
 const userEntryTableRows = document.getElementsByClassName("userEntryTableRows");
 let idNumbers = document.getElementsByClassName("idNumberLabels");
 let idNumber = new Set();
+const editBoxContainer = document.getElementById("editBoxContainer")
+const editBox = document.getElementById("editBoxForm");
 
 for (let i = 0; i < idNumbers.length; i++) {    
     idNumber.add(idNumbers[i].innerText);
@@ -21,41 +23,35 @@ for (let i = 0; i < editButtonArray.length; i++) {
     //console.log(editButtonArray[i].id)
     editButtonArray[i].addEventListener("click", () => {
         //console.log("click");
-        let editBoxContainer = document.createElement("div");
-        editBoxContainer.setAttribute("id", "editBoxContainer");
-        let editBox = document.createElement("form");
-        editBox.setAttribute("id", "editBox");
-        let body = document.getElementById("body");
         let editBoxLabel = document.createElement("label");
         editBoxLabel.setAttribute("id", "editBoxLabel");
-        editBoxLabel.innerText = "Need to remove some evidence? Go ahead..."
+        editBoxLabel.innerText = "Need to remove some evidence? Go ahead...";
         editBox.appendChild(editBoxLabel);
-        let editTitleLabel = document.createElement("label");
-        editTitleLabel.innerText = "Title";
-        editBox.appendChild(editTitleLabel);
         let editTitleInput = document.createElement("input");
         editTitleInput.setAttribute("id", "editTitleInput");
+        editTitleInput.setAttribute("name", "editTitleInput");
         editBox.appendChild(editTitleInput);
-        let editBoxInputLabel = document.createElement("label");
-        editBoxInputLabel.innerText = "Text";
-        editBox.appendChild(editBoxInputLabel);
         let editBoxInput = document.createElement("textarea");
         editBoxInput.setAttribute("id", "editBoxInput");
+        editBoxInput.setAttribute("name", "editBoxInput");
         editBoxInput.setAttribute("rows", "4");
         editBoxInput.setAttribute("cols", "50");
         editBoxInput.setAttribute("maxlength", "128");
         editBox.appendChild(editBoxInput);
+        let editBoxDate = document.createElement("input");
+        editBoxDate.setAttribute("type", "date");
+        editBoxDate.setAttribute("id", "editBoxDate");
+        editBoxDate.setAttribute("name", "editBoxDate");
+        editBox.appendChild(editBoxDate);
         let editBoxSaveButton = document.createElement("button");
-        editBoxSaveButton.setAttribute("id", i);
+        editBoxSaveButton.setAttribute("id", "editBoxSaveButton");
         editBoxSaveButton.innerText = "Save";
         editBox.appendChild(editBoxSaveButton);
-        let editBoxCancelButton = document.createElement("button");
+        let editBoxCancelButton = document.createElement("label");
         editBoxCancelButton.setAttribute("id", "editBoxCancelButton");
         editBoxCancelButton.innerText = "Cancel";
         editBox.appendChild(editBoxCancelButton);
-        editBoxContainer.appendChild(editBox);
-        body.appendChild(editBoxContainer);
-
+        cancel();
         const editButtonId = editButtonArray[i].id;
         console.log(editButtonId);
         const correspondingSpan = document.querySelector(`[data-edit-button="${editButtonId}"]`);
@@ -95,4 +91,10 @@ function charCountdown() {
     let remainingChars = maxLength - inputTextArea.value.length;
 
     count.innerText = remainingChars;
+}
+
+function cancel() {
+    document.getElementById("editBoxCancelButton").addEventListener("click", () => {
+        location.href = "/";
+    })
 }
