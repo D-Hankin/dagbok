@@ -4,36 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
+    <link type="text" href="style.css">
     <title>Diary of Dominion</title>
 </head>
-<body>
+<body id="body">
     <h1>Welcome Overlord</h1>
-    <h2>What devastation have you wrought recently?</h2>
+    <h2>Some new devastation to report?</h2>
     <div>
         <form method="post" th:action="@{/new-entry}">
-            <input type="text" name="newEntry">
-            <button>Save</button>
+            <input id ="inputTitle" type="text" name="newEntryTitle" placeholder="Title">
+            <textarea id="inputTextArea" type="textarea" rows="4" cols="50" name="newEntry" placeholder="Write your devious ideas here..." maxlength="128" oninput="charCountdown()"></textarea>
+            <label id="charCounter"><span id="count">128</span></label>
+            <label id="dateForDisplayLabel">Choose when this entry will be visible</label>
+            <input type="date" id="dateForDisplay" name="dateForDisplay">
+            <label id="dateClarificationLabel">(leave blank to display straight away)</label>
+            <button id="newEntryFormSaveBtn">Save</button>
         </form>
     </div>
-    <ul>
-        <li th:each="entry : ${diaryEntries}">
-            <span th:text="${#temporals.format(entry.datetime, 'dd/mm-yy, HH:mm')}"></span>
-            <span th:text="${entry.entry}"></span>
-            <a th:href="@{/delete-entry(id=${entry.id})}">[X]</a>
-            <a class="editButtons" th:id="${entry.id}">[edit]</a>
-            <label class="idNumberLabels" th:text="${entry.id}"></label>
-        </li>
+    <div id="userEntriesTableContainer">
+        <table id="userEntriesTable">
+            <tr>
+                <thead>Created</thead>
+                <thead>Title</thead>
+                <thead>Text</thead>
+                <thead>Delete Entry</thead>
+                <thead>Edit Entry</thead>
+            </tr>
+            <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
+                <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
+                <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}" th:data-edit-button="${entry.id}"></span></td>
+                <td><span th:id="${'text_' + entry.id}" th:text="${entry.entry}" th:data-edit-button="${entry.id}"></span></td>
+                <td><a th:href="@{/delete-entry(id=${entry.id})}">[X]</a></td>
+                <td><a class="editButtons" th:id="${entry.id}">[edit]</a></td>
+                <td class="itemIdTd"><span class="idNumberLabels" th:text="${entry.id}"></span></td>
+            </tr>
+        </table>
         <form th:action="@{/undo-last-delete}">
             <button>Undo Last Delete</button>
         </form>
-    </ul>
-    <div id="editBox">
-        <form>
-            <label>Need to remove some evidence? Go ahead...</label>
-            <input type="text" name="updatedText">
-            <button>Save</button>
-            <button>Cancel</button>
-        </form>
+        <div id="editBoxFormContainer">
+            <form id="editBoxForm" method="post" th:action="@{/edit-entry}">
+
+            </form>
+        </div>
     </div>
 </body>
 </html>

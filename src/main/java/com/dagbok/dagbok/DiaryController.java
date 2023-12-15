@@ -1,11 +1,13 @@
 package com.dagbok.dagbok;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,14 +28,20 @@ public class DiaryController {
     }
 
     @PostMapping("/new-entry")
-    public String addNewEntry(@RequestParam("newEntry") String newEntry) {
+    public String addNewEntry(@RequestParam("newEntryTitle") String newEntryTitle, @RequestParam("newEntry") String newEntry, @RequestParam(name = "dateForDisplay", required = false) LocalDate dateForDisplay ) {
 
         String newEntryTrimmed = newEntry.trim();
+        String newEntryTitleTrimmed = newEntryTitle.trim();
 
-        if (newEntryTrimmed != "") {
+        if (dateForDisplay == null) 
+            dateForDisplay = LocalDate.now();
+
+        if (newEntryTrimmed != "" && newEntryTitleTrimmed != "") {
             Diary diary = new Diary();
             diary.setDatetime(LocalDateTime.now());
+            diary.setTitle(newEntryTitle);
             diary.setEntry(newEntry);
+            diary.setDateForDisplay(dateForDisplay);
             diaryRepository.save(diary);
         }
         return "redirect:/";
@@ -56,6 +64,12 @@ public class DiaryController {
             diaryRepository.undoLastDelete(lastDeletedId);
         }
 
+        return "redirect:/";
+    }
+
+    @PostMapping("/edit-entry")
+    public String editEntry(Model model) {
+        System.out.println("edit");
         return "redirect:/";
     }
     
