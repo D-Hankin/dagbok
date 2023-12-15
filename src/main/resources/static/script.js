@@ -18,10 +18,9 @@ let editButtonsValues = new Set();
 
 for (let i = 0; i < editButtonArray.length; i++) {
     editButtonsValues.add(editButtonArray[i].id);  
-    let singleButton = document.getElementById(editButtonsValues[i]);
-    console.log(singleButton);
+    //console.log(editButtonArray[i].id)
     editButtonArray[i].addEventListener("click", () => {
-        console.log("click");
+        //console.log("click");
         let editBoxContainer = document.createElement("div");
         editBoxContainer.setAttribute("id", "editBoxContainer");
         let editBox = document.createElement("form");
@@ -31,11 +30,23 @@ for (let i = 0; i < editButtonArray.length; i++) {
         editBoxLabel.setAttribute("id", "editBoxLabel");
         editBoxLabel.innerText = "Need to remove some evidence? Go ahead..."
         editBox.appendChild(editBoxLabel);
-        let editBoxInput = document.createElement("input");
+        let editTitleLabel = document.createElement("label");
+        editTitleLabel.innerText = "Title";
+        editBox.appendChild(editTitleLabel);
+        let editTitleInput = document.createElement("input");
+        editTitleInput.setAttribute("id", "editTitleInput");
+        editBox.appendChild(editTitleInput);
+        let editBoxInputLabel = document.createElement("label");
+        editBoxInputLabel.innerText = "Text";
+        editBox.appendChild(editBoxInputLabel);
+        let editBoxInput = document.createElement("textarea");
         editBoxInput.setAttribute("id", "editBoxInput");
+        editBoxInput.setAttribute("rows", "4");
+        editBoxInput.setAttribute("cols", "50");
+        editBoxInput.setAttribute("maxlength", "128");
         editBox.appendChild(editBoxInput);
         let editBoxSaveButton = document.createElement("button");
-        editBoxSaveButton.setAttribute("id", "editBoxSaveButton");
+        editBoxSaveButton.setAttribute("id", i);
         editBoxSaveButton.innerText = "Save";
         editBox.appendChild(editBoxSaveButton);
         let editBoxCancelButton = document.createElement("button");
@@ -45,11 +56,30 @@ for (let i = 0; i < editButtonArray.length; i++) {
         editBoxContainer.appendChild(editBox);
         body.appendChild(editBoxContainer);
 
-    })
+        const editButtonId = editButtonArray[i].id;
+        console.log(editButtonId);
+        const correspondingSpan = document.querySelector(`[data-edit-button="${editButtonId}"]`);
+        /*let entryTitleArray = document.getElementsByClassName("entryTitle");
+        let entryTitles = [...entryTitleArray];
+        let entryTextArray = document.getElementsByClassName("entryText");
+        let entryTexts = [...entryTextArray];*/
+        console.log(correspondingSpan);
+        if(correspondingSpan) {
+            const titleSpan = document.getElementById("title_" + editButtonId)
+            const textSpan = document.getElementById("text_" + editButtonId)
+            editTitleInput.value = correspondingSpan.innerText;
+            editBoxInput.value = correspondingSpan.innerText;
+            console.log(correspondingSpan.innerText);
+        }
+
+        for (let j = 0; j < editButtonArray.length; j++) {
+            editButtonArray[j].style.pointerEvents = "none";
+        }
+    });
 }
 
-console.log(idNumber);
-console.log(editButtonsValues);
+//console.log(idNumber);
+//console.log(editButtonsValues);
 
 document.getElementById("newEntryFormSaveBtn").addEventListener("click", () => {
     if (!newEntryInputTextArea.value.trim() || !newEntryInputTitle.value.trim()) {

@@ -9,7 +9,7 @@
 </head>
 <body id="body">
     <h1>Welcome Overlord</h1>
-    <h2>What devastation have you wrought recently?</h2>
+    <h2>Some new devastation to report?</h2>
     <div>
         <form method="post" th:action="@{/new-entry}">
             <input id ="inputTitle" type="text" name="newEntryTitle" placeholder="Title">
@@ -31,9 +31,9 @@
                 <thead>Edit Entry</thead>
             </tr>
             <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
-                <td><span th:text="${#temporals.format(entry.datetime, 'dd/mm-yy, HH:mm')}"></span></td>
-                <td><span th:text="${entry.title}"></span></td>
-                <td><span th:text="${entry.entry}"></span></td>
+                <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
+                <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}" th:data-edit-button="${entry.id}"></span></td>
+                <td><span th:id="${'text_' + entry.id}" th:text="${entry.entry}" th:data-edit-button="${entry.id}"></span></td>
                 <td><a th:href="@{/delete-entry(id=${entry.id})}">[X]</a></td>
                 <td><a class="editButtons" th:id="${entry.id}">[edit]</a></td>
                 <td class="itemIdTd"><span class="idNumberLabels" th:text="${entry.id}"></span></td>
