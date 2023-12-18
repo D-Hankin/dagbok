@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +27,7 @@ public class DiaryController {
     }
 
     @PostMapping("/new-entry")
-    public String addNewEntry(@RequestParam("newEntryTitle") String newEntryTitle, @RequestParam("newEntry") String newEntry, @RequestParam(name = "dateForDisplay", required = false) LocalDate dateForDisplay ) {
+    public String addNewEntry(@RequestParam("newEntryTitle") String newEntryTitle, @RequestParam("newEntry") String newEntry, @RequestParam(name = "dateForDisplay", required = false) LocalDate dateForDisplay) {
 
         String newEntryTrimmed = newEntry.trim();
         String newEntryTitleTrimmed = newEntryTitle.trim();
@@ -66,10 +65,23 @@ public class DiaryController {
 
         return "redirect:/";
     }
-
+    
     @PostMapping("/edit-entry")
-    public String editEntry(Model model) {
-        System.out.println("edit");
+    public String editEntry(@RequestParam int id, @RequestParam("editTitleInput") String editTitleInput, @RequestParam("editBoxInput") String editBoxInput, @RequestParam(name = "editBoxDate", required = false) LocalDate editBoxDate) {
+        System.out.println(id + " " + editTitleInput + " " + editBoxInput + " " + editBoxDate);
+
+        String editTitleInputTrimmed = editTitleInput.trim();
+        String editBoxInputTrimmed = editBoxInput.trim();
+        
+        if (editBoxDate == null) 
+            editBoxDate = LocalDate.now();
+
+        if (editTitleInputTrimmed != "" && editBoxInputTrimmed != "") {
+            
+            diaryRepository.editEntryQuery(editTitleInput, editBoxInput, editBoxDate, id);
+        
+        }
+
         return "redirect:/";
     }
     
