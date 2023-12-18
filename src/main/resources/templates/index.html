@@ -33,7 +33,7 @@
     <div id="userEntriesTableContainer">
         <table id="userEntriesTable">
             <thead>
-                <th>Created</th>
+                <th>Date</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th>Delete Entry</th>
@@ -41,11 +41,11 @@
             </thead>
             <tbody>
                 <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
-                    <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
+                    <td><span th:text="${#temporals.format(entry.dateForDisplay, 'dd/MM-yy') + ' (Created: ' + #temporals.format(entry.datetime, 'dd/MM-yy, HH:mm') + ')'}"></span></td>
                     <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}"></span></td>
                     <td><span th:id="${'text_' + entry.id}" th:text="${entry.entry}"></span></td>
-                    <td><a th:href="@{/delete-entry(id=${entry.id})}">[X]</a></td>
-                    <td><a class="editButtons" th:id="${entry.id}">[edit]</a></td>
+                    <td><a th:href="@{/delete-entry(id=${entry.id})}"><img src="deleteIcon.png" alt="delete entry"></a></td>
+                    <td><a class="editButtons" th:id="${entry.id}"><img src="editIcon.png"></a></td>
                     <td>
                         <div class="editBoxFormContainers">
                             <form th:id="${entry.id}" method="post" th:action="@{/edit-entry(id=${entry.id})}">
