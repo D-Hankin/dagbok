@@ -40,7 +40,6 @@
                 <th>Edit Entry</th>     
             </thead>
             <tbody>
-
                 <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
                     <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
                     <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}"></span></td>
@@ -64,9 +63,13 @@
                 </tr>
             </tbody>
         </table>
+        <form th:action="@{/show-all}">
+            <button>Show all Entries</button>
+        </form>
         <form th:action="@{/undo-last-delete}">
             <button>Undo Last Delete</button>
         </form>
+        <button><a th:href="@{/}">Reset Search Parameters</a></button>
     </div>
 </body>
 </html>
