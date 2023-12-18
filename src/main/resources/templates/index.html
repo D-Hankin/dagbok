@@ -55,8 +55,10 @@
                                 <label for="editBoxDate">Visible from: </label>
                                 <input type="date" id="editBoxDate" name="editBoxDate" th:value="${entry.dateForDisplay}" required>
                                 <button id="editBoxSaveButton">Save</button>
-                                <a class="editBoxCancelButtons" th:href="@{/}">Cancel</a>
                             </form>
+                            <button>
+                                <a class="editBoxCancelButtons" th:href="@{/}">Cancel</a>
+                            </button>
                         </div>
                     </td>
                     <td class="itemIdTd"><span class="idNumberLabels" th:text="${entry.id}"></span></td>
