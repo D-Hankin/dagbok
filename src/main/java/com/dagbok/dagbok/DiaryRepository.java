@@ -1,5 +1,6 @@
 package com.dagbok.dagbok;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,5 +23,10 @@ public interface DiaryRepository extends CrudRepository<Diary, Integer> {
     @Modifying
     @Query("UPDATE Diary e SET e.deleted = 0 WHERE e.id = ?1")
     int undoLastDelete(int id);
+
+    @Transactional
+    @Modifying
+    @Query("Update Diary e SET e.title = ?1, e.entry = ?2, e.dateForDisplay = ?3 WHERE e.id = ?4")
+    void editEntryQuery(String title, String entry, LocalDate date_for_display, int id);
     
 }

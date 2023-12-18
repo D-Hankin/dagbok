@@ -6,12 +6,13 @@ const itemIdTd = document.getElementsByClassName("itemIdTd");
 const userEntryTableRows = document.getElementsByClassName("userEntryTableRows");
 let idNumbers = document.getElementsByClassName("idNumberLabels");
 let idNumber = new Set();
-const editBoxContainer = document.getElementById("editBoxContainer")
-const editBox = document.getElementById("editBoxForm");
+const editBoxContainers = document.getElementsByClassName("editBoxFormContainers")
+const editBoxCancelButtons = document.getElementsByClassName("editBoxCancelButtons");
 
 for (let i = 0; i < idNumbers.length; i++) {    
     idNumber.add(idNumbers[i].innerText);
-    idNumbers[i].innerText = "";
+    idNumbers[i].style.display = "none";
+    editBoxContainers[i].style.display="none";
 
 }
 
@@ -23,50 +24,10 @@ for (let i = 0; i < editButtonArray.length; i++) {
     //console.log(editButtonArray[i].id)
     editButtonArray[i].addEventListener("click", () => {
         //console.log("click");
-        let editBoxLabel = document.createElement("label");
-        editBoxLabel.setAttribute("id", "editBoxLabel");
-        editBoxLabel.innerText = "Need to remove some evidence? Go ahead...";
-        editBox.appendChild(editBoxLabel);
-        let editTitleInput = document.createElement("input");
-        editTitleInput.setAttribute("id", "editTitleInput");
-        editTitleInput.setAttribute("name", "editTitleInput");
-        editBox.appendChild(editTitleInput);
-        let editBoxInput = document.createElement("textarea");
-        editBoxInput.setAttribute("id", "editBoxInput");
-        editBoxInput.setAttribute("name", "editBoxInput");
-        editBoxInput.setAttribute("rows", "4");
-        editBoxInput.setAttribute("cols", "50");
-        editBoxInput.setAttribute("maxlength", "128");
-        editBox.appendChild(editBoxInput);
-        let editBoxDate = document.createElement("input");
-        editBoxDate.setAttribute("type", "date");
-        editBoxDate.setAttribute("id", "editBoxDate");
-        editBoxDate.setAttribute("name", "editBoxDate");
-        editBox.appendChild(editBoxDate);
-        let editBoxSaveButton = document.createElement("button");
-        editBoxSaveButton.setAttribute("id", "editBoxSaveButton");
-        editBoxSaveButton.innerText = "Save";
-        editBox.appendChild(editBoxSaveButton);
-        let editBoxCancelButton = document.createElement("label");
-        editBoxCancelButton.setAttribute("id", "editBoxCancelButton");
-        editBoxCancelButton.innerText = "Cancel";
-        editBox.appendChild(editBoxCancelButton);
-        cancel();
-        const editButtonId = editButtonArray[i].id;
-        console.log(editButtonId);
-        const correspondingSpan = document.querySelector(`[data-edit-button="${editButtonId}"]`);
-        /*let entryTitleArray = document.getElementsByClassName("entryTitle");
-        let entryTitles = [...entryTitleArray];
-        let entryTextArray = document.getElementsByClassName("entryText");
-        let entryTexts = [...entryTextArray];*/
-        console.log(correspondingSpan);
-        if(correspondingSpan) {
-            const titleSpan = document.getElementById("title_" + editButtonId)
-            const textSpan = document.getElementById("text_" + editButtonId)
-            editTitleInput.value = correspondingSpan.innerText;
-            editBoxInput.value = correspondingSpan.innerText;
-            console.log(correspondingSpan.innerText);
+        if (editBoxContainers[i].id = idNumbers[i].innerText) {
+            editBoxContainers[i].style.display = "block";
         }
+        cancel();
 
         for (let j = 0; j < editButtonArray.length; j++) {
             editButtonArray[j].style.pointerEvents = "none";
@@ -94,7 +55,12 @@ function charCountdown() {
 }
 
 function cancel() {
-    document.getElementById("editBoxCancelButton").addEventListener("click", () => {
-        location.href = "/";
-    })
+
+    for (let i = 0; i < editBoxCancelButtons.length; i++) {
+        
+        editBoxCancelButtons[i].addEventListener("click", () => {
+            
+            location.href = "/";
+        })
+    }
 }
