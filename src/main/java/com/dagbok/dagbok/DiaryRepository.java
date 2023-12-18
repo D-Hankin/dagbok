@@ -14,6 +14,9 @@ public interface DiaryRepository extends CrudRepository<Diary, Integer> {
     @Query("SELECT e FROM Diary e WHERE e.deleted = 0 ORDER BY e.datetime DESC")
     List<Diary> findBySoftDelete();
 
+    @Query("SELECT e FROM Diary e WHERE e.dateForDisplay <= ?1 AND e.deleted = 0 ORDER BY e.datetime DESC")
+    List<Diary> showByDate(LocalDate datetime);
+
     @Transactional
     @Modifying
     @Query("UPDATE Diary e SET e.deleted = 1 WHERE e.id = ?1")
@@ -28,5 +31,9 @@ public interface DiaryRepository extends CrudRepository<Diary, Integer> {
     @Modifying
     @Query("Update Diary e SET e.title = ?1, e.entry = ?2, e.dateForDisplay = ?3 WHERE e.id = ?4")
     void editEntryQuery(String title, String entry, LocalDate date_for_display, int id);
+
+
+    @Query("SELECT e FROM Diary e WHERE e.dateForDisplay >= ?1 AND e.dateForDisplay <= ?2 AND e.deleted = 0 ORDER BY e.datetime DESC")
+    List<Diary> searchByDate(LocalDate startDateX, LocalDate finishDateX);
     
 }

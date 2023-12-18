@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class DiaryController {
     
@@ -17,11 +18,20 @@ public class DiaryController {
     private DiaryRepository diaryRepository;
 
     int lastDeletedId = 0;
+    int displayType = 0;
+    LocalDate startDateX = LocalDate.now();
+    LocalDate finishDateX = LocalDate.now();
 
-    @GetMapping
+    @GetMapping("/")
     public String getIndex(Model model) {
         
-        model.addAttribute("diaryEntries", diaryRepository.findBySoftDelete());
+        System.out.println(displayType + " " + startDateX + " " + finishDateX);
+        if (displayType == 0) {
+            model.addAttribute("diaryEntries", diaryRepository.showByDate(LocalDate.now()));
+        } else {
+            System.out.println("getting here");
+            model.addAttribute("diaryEntries", diaryRepository.searchByDate(startDateX, finishDateX));
+        }
 
         return "index";
     }
@@ -77,11 +87,22 @@ public class DiaryController {
             editBoxDate = LocalDate.now();
 
         if (editTitleInputTrimmed != "" && editBoxInputTrimmed != "") {
-            
+
             diaryRepository.editEntryQuery(editTitleInput, editBoxInput, editBoxDate, id);
         
         }
 
+        return "redirect:/";
+    }
+    
+    @PostMapping("/search-by-date")
+    public String byDate(@RequestParam("chooseStartDate") LocalDate startDate, @RequestParam("chooseFinishDate") LocalDate finishDate) {
+
+        if (startDate != null || finishDate != null) {
+            displayType = 1;
+            startDateX = startDate;
+            finishDateX = finishDate;
+        }
         return "redirect:/";
     }
     
