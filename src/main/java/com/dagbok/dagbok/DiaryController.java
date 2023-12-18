@@ -25,12 +25,15 @@ public class DiaryController {
     @GetMapping("/")
     public String getIndex(Model model) {
         
-        System.out.println(displayType + " " + startDateX + " " + finishDateX);
         if (displayType == 0) {
             model.addAttribute("diaryEntries", diaryRepository.showByDate(LocalDate.now()));
-        } else {
-            System.out.println("getting here");
+        } else if (displayType == 1) {
             model.addAttribute("diaryEntries", diaryRepository.searchByDate(startDateX, finishDateX));
+            displayType = 0;
+        } else {
+            model.addAttribute("diaryEntries", diaryRepository.findBySoftDelete());
+            System.out.println("getting here");
+            displayType = 0;
         }
 
         return "index";
@@ -105,8 +108,10 @@ public class DiaryController {
         }
         return "redirect:/";
     }
-    
-    
-    
 
+    @GetMapping("/show-all")
+    public String getMethodName() {
+        displayType = 2;
+        return "redirect:/";
+    }
 }
