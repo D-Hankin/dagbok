@@ -27,8 +27,6 @@ for (let i = 0; i < editButtonArray.length; i++) {
         if (editBoxContainers[i].id = idNumbers[i].innerText) {
             editBoxContainers[i].style.display = "block";
         }
-        cancel();
-
         for (let j = 0; j < editButtonArray.length; j++) {
             editButtonArray[j].style.pointerEvents = "none";
         }
@@ -52,15 +50,4 @@ function charCountdown() {
     let remainingChars = maxLength - inputTextArea.value.length;
 
     count.innerText = remainingChars;
-}
-
-function cancel() {
-
-    for (let i = 0; i < editBoxCancelButtons.length; i++) {
-        
-        editBoxCancelButtons[i].addEventListener("click", () => {
-            
-            location.href = "/";
-        })
-    }
 }

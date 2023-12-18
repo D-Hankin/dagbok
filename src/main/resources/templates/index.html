@@ -14,43 +14,55 @@
         <form method="post" th:action="@{/new-entry}">
             <input id ="inputTitle" type="text" name="newEntryTitle" placeholder="Title">
             <textarea id="inputTextArea" type="textarea" rows="4" cols="50" name="newEntry" placeholder="Write your devious ideas here..." maxlength="128" oninput="charCountdown()"></textarea>
-            <label id="charCounter"><span id="count">128</span></label>
-            <label id="dateForDisplayLabel">Choose when this entry will be visible</label>
-            <input type="date" id="dateForDisplay" name="dateForDisplay">
-            <label id="dateClarificationLabel">(leave blank to display straight away)</label>
+            <label for="inputTextArea" id="charCounter"><span id="count">128</span></label>
+            <label for="dateForDisplay" id="dateForDisplayLabel">Choose when this entry will be visible</label>
+            <input type="date" id="dateForDisplay" name="dateForDisplay" required>
             <button id="newEntryFormSaveBtn">Save</button>
+        </form>
+    </div>
+    <div id="userSelectDatesContainer">
+        <form method="post" th:action="@{/search-by-date}">
+            <h2>Here an up-to-date list of your diary entries. Choose specific dates if you wish to search for an entry or entries.</h2>
+            <label for="chooseStartDate">From: </label>
+            <input id="chooseStartDate" type="date" name="chooseStartDate" required>
+            <label for="chooseFinishDate">to: </label>
+            <input id="chooseFinishDate" type="date" name="chooseFinishDate" required>
+            <button id="chooseDatesButton">Search</button>
         </form>
     </div>
     <div id="userEntriesTableContainer">
         <table id="userEntriesTable">
-            <tr>
-                <thead>Created</thead>
-                <thead>Title</thead>
-                <thead>Text</thead>
-                <thead>Delete Entry</thead>
-                <thead>Edit Entry</thead>
-            </tr>
-            <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
-                <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
-                <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}"></span></td>
-                <td><span th:id="${'text_' + entry.id}" th:text="${entry.entry}"></span></td>
-                <td><a th:href="@{/delete-entry(id=${entry.id})}">[X]</a></td>
-                <td><a class="editButtons" th:id="${entry.id}">[edit]</a></td>
-                <td>
-                    <div class="editBoxFormContainers">
-                        <form th:id="${entry.id}" method="post" th:action="@{/edit-entry(id=${entry.id})}">
-                            <label id="editBoxLabel">Need to remove some evidence? Go ahead...</label>
-                            <input id="editTitleInput" name="editTitleInput" th:value="${entry.title}">
-                            <textarea id="editBoxInput" name="editBoxInput" th:text="${entry.entry}" rows="4" cols="50" maxlength="128"></textarea>
-                            <input type="date" id="editBoxDate" name="editBoxDate"><button id="editBoxSaveButton">Save</button>
-                            <label class="editBoxCancelButtons">Cancel</label></form>
-                        </form>
-                    </div>
-                </td>
-                <td class="itemIdTd"><span class="idNumberLabels" th:text="${entry.id}"></span></td>
-            </tr>
-            <tr>
-            </tr>
+            <thead>
+                <th>Created</th>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Delete Entry</th>
+                <th>Edit Entry</th>     
+            </thead>
+            <tbody>
+
+                <tr class="userEntriesTableRows" th:each="entry : ${diaryEntries}">
+                    <td><span th:text="${#temporals.format(entry.datetime, 'dd/MM-yy, HH:mm')}"></span></td>
+                    <td><span th:id="${'title_' + entry.id}" th:text="${entry.title}"></span></td>
+                    <td><span th:id="${'text_' + entry.id}" th:text="${entry.entry}"></span></td>
+                    <td><a th:href="@{/delete-entry(id=${entry.id})}">[X]</a></td>
+                    <td><a class="editButtons" th:id="${entry.id}">[edit]</a></td>
+                    <td>
+                        <div class="editBoxFormContainers">
+                            <form th:id="${entry.id}" method="post" th:action="@{/edit-entry(id=${entry.id})}">
+                                <label id="editBoxLabel">Need to remove some evidence? Go ahead...</label>
+                                <input id="editTitleInput" name="editTitleInput" th:value="${entry.title}">
+                                <textarea id="editBoxInput" name="editBoxInput" th:text="${entry.entry}" rows="4" cols="50" maxlength="128"></textarea>
+                                <label for="editBoxDate">Visible from: </label>
+                                <input type="date" id="editBoxDate" name="editBoxDate" th:value="${entry.dateForDisplay}" required>
+                                <button id="editBoxSaveButton">Save</button>
+                                <a class="editBoxCancelButtons" th:href="@{/}">Cancel</a>
+                            </form>
+                        </div>
+                    </td>
+                    <td class="itemIdTd"><span class="idNumberLabels" th:text="${entry.id}"></span></td>
+                </tr>
+            </tbody>
         </table>
         <form th:action="@{/undo-last-delete}">
             <button>Undo Last Delete</button>
