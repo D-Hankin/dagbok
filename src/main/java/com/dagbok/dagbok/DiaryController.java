@@ -19,6 +19,7 @@ public class DiaryController {
 
     int lastDeletedId = 0;
     int displayType = 0;
+    int displayAfterEdit = 0;
     LocalDate startDateX = LocalDate.now();
     LocalDate finishDateX = LocalDate.now();
 
@@ -30,10 +31,12 @@ public class DiaryController {
         } else if (displayType == 1) {
             model.addAttribute("diaryEntries", diaryRepository.searchByDate(startDateX, finishDateX));
             displayType = 0;
+            displayAfterEdit = 1;
         } else {
             model.addAttribute("diaryEntries", diaryRepository.findBySoftDelete());
             System.out.println("getting here");
             displayType = 0;
+            displayAfterEdit = 2;
         }
 
         return "index";
@@ -56,6 +59,7 @@ public class DiaryController {
             diary.setDateForDisplay(dateForDisplay);
             diaryRepository.save(diary);
         }
+
         return "redirect:/";
     }
 
@@ -92,7 +96,19 @@ public class DiaryController {
         if (editTitleInputTrimmed != "" && editBoxInputTrimmed != "") {
 
             diaryRepository.editEntryQuery(editTitleInput, editBoxInput, editBoxDate, id);
-        
+            if (displayAfterEdit == 2) {
+                displayType = 2;
+                displayAfterEdit = 0;
+                System.out.println("show all");
+            } else if (displayAfterEdit == 1) {
+                displayType = 1;
+                displayAfterEdit = 0;
+                System.out.println("show searched");
+            } else {
+                displayType = 0;
+                displayAfterEdit = 0;
+                System.out.println("show rest");
+            }
         }
 
         return "redirect:/";
@@ -106,12 +122,14 @@ public class DiaryController {
             startDateX = startDate;
             finishDateX = finishDate;
         }
+
         return "redirect:/";
     }
 
     @GetMapping("/show-all")
     public String getMethodName() {
         displayType = 2;
+
         return "redirect:/";
     }
 }
