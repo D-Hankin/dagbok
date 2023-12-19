@@ -8,6 +8,8 @@ let idNumbers = document.getElementsByClassName("idNumberLabels");
 let idNumber = new Set();
 const editBoxContainers = document.getElementsByClassName("editBoxFormContainers")
 const editBoxCancelButtons = document.getElementsByClassName("editBoxCancelButtons");
+let editButtonArray = document.getElementsByClassName("editButtons");
+let editButtonsValues = new Set();
 
 for (let i = 0; i < idNumbers.length; i++) {    
     idNumber.add(idNumbers[i].innerText);
@@ -15,9 +17,6 @@ for (let i = 0; i < idNumbers.length; i++) {
     editBoxContainers[i].style.display="none";
 
 }
-
-let editButtonArray = document.getElementsByClassName("editButtons");
-let editButtonsValues = new Set();
 
 for (let i = 0; i < editButtonArray.length; i++) {
     editButtonsValues.add(editButtonArray[i].id);  
