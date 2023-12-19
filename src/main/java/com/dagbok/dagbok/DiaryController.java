@@ -34,7 +34,6 @@ public class DiaryController {
             displayAfterEdit = 1;
         } else {
             model.addAttribute("diaryEntries", diaryRepository.findBySoftDelete());
-            System.out.println("getting here");
             displayType = 0;
             displayAfterEdit = 2;
         }
@@ -76,7 +75,6 @@ public class DiaryController {
     public String undoLastDeleteString() {
 
         if (lastDeletedId != 0) {
-            System.out.println(lastDeletedId);
             diaryRepository.undoLastDelete(lastDeletedId);
         }
 
@@ -85,7 +83,6 @@ public class DiaryController {
     
     @PostMapping("/edit-entry")
     public String editEntry(@RequestParam int id, @RequestParam("editTitleInput") String editTitleInput, @RequestParam("editBoxInput") String editBoxInput, @RequestParam(name = "editBoxDate", required = false) LocalDate editBoxDate) {
-        System.out.println(id + " " + editTitleInput + " " + editBoxInput + " " + editBoxDate);
 
         String editTitleInputTrimmed = editTitleInput.trim();
         String editBoxInputTrimmed = editBoxInput.trim();
@@ -96,18 +93,16 @@ public class DiaryController {
         if (editTitleInputTrimmed != "" && editBoxInputTrimmed != "") {
 
             diaryRepository.editEntryQuery(editTitleInput, editBoxInput, editBoxDate, id);
+
             if (displayAfterEdit == 2) {
                 displayType = 2;
                 displayAfterEdit = 0;
-                System.out.println("show all");
             } else if (displayAfterEdit == 1) {
                 displayType = 1;
                 displayAfterEdit = 0;
-                System.out.println("show searched");
             } else {
                 displayType = 0;
                 displayAfterEdit = 0;
-                System.out.println("show rest");
             }
         }
 
@@ -118,7 +113,9 @@ public class DiaryController {
     public String byDate(@RequestParam("chooseStartDate") LocalDate startDate, @RequestParam("chooseFinishDate") LocalDate finishDate) {
 
         if (startDate != null || finishDate != null) {
+            
             displayType = 1;
+            displayAfterEdit = 0;
             startDateX = startDate;
             finishDateX = finishDate;
         }
@@ -129,7 +126,7 @@ public class DiaryController {
     @GetMapping("/show-all")
     public String getMethodName() {
         displayType = 2;
-
+        displayAfterEdit = 0;
         return "redirect:/";
     }
 }
