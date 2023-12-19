@@ -1,0 +1,243 @@
+#body {
+    background-image: url("backgroundDiary.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    height: 100vh;
+    width: 98vw;
+    max-width: 98vw;
+    overflow-x: initial;
+}
+
+#bodyFlex {
+    display: flex;
+    flex-direction: row;
+}
+
+#leftSide {
+    flex: 1;
+    padding: 1%;
+    max-width: 33%;
+}
+
+#rightSide {
+    flex: 2;
+    padding: 1%;
+    max-width: 66%;
+}
+
+h1, h2, form header {
+    font-family: 'MedievalSharp';
+}
+
+.editBoxFormContainers{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: darkred;
+    color: whitesmoke;
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 0 0 10px whitesmoke(0, 0, 0, 0.6);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.editBoxFormContainers form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 100%;
+    text-align: center;
+    display: block;
+    margin-top: 3%;
+}
+
+.editBoxCancelButtons, 
+#editBoxSaveButton, 
+#newEntryFormSaveBtn,
+#chooseDatesButton,
+#showAllButton,
+#undoLastButton,
+#resetSearchButton {
+    width: max-content;
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #ccc;
+    color: #000;
+    border: 1px solid #888;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13.3333px;
+}
+
+#resetSearchButtonA {
+    text-decoration: none;
+    color: #000;
+}
+
+#editBoxSaveButton:hover, 
+a.editBoxCancelButtons:hover,
+#newEntryFormSaveBtn:hover,
+#chooseDatesButton:hover,
+#showAllButton:hover,
+#undoLastButton:hover,
+#resetSearchButton:hover {
+    background-color: darkgrey;
+}
+
+#editBoxText,
+#editBoxDate,
+#editTitleInput,
+#editBoxLabel {
+    margin-bottom: 3%;
+}
+
+#editBoxButtonContainer {
+    display: inline;
+    width: 40%;
+    margin-right: 2%;
+    text-align: center;
+}
+
+.entryTextAreas {
+    width: 200px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+#logoContainer {
+   max-width: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content:space-between;
+}
+
+#h1Container {
+    max-width: 100%;
+    text-align: center;
+    margin: auto;
+    padding-right: 15%;
+}
+
+h1 {
+    font-size: 400%;
+    color:yellow;
+    border: 3px solid yellow;
+    padding: 8px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #FF4500, #FF8C00, #FFD700, #FF8C00, #FF4500);
+}
+
+#newEntryFormContainer {
+    width: 100%;
+    max-width: 98vw;
+    text-align: center; 
+    margin: auto;   
+}
+
+#newEntryForm {
+    width: 100%;
+    max-width: fit-content;
+    background-color: darkred;
+    padding: 3%;
+    display: inline-block;
+    border: 3px solid black;
+    border-radius: 10px;
+    margin: auto;
+}
+
+#h2ContainerNew {
+    width: 100%;
+    max-width: 96vw;
+    background-color: darkred;
+    text-align: center;
+    height: fit-content;
+    margin: 1vw 0 1vw 0;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#h2ContainerList {
+    width: 100%;
+    max-width: 96vw;
+    background-color: darkred;
+    text-align: center;
+    height: fit-content;
+    margin: 1vw 0 1vw 0;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#inputTitle,
+#inputTextAreaContainer,
+#dateForDisplayContainer {
+    display: block;
+    margin-bottom: 3%;
+}
+
+#inputTextArea {
+    resize: none;
+    width: 90%;
+    min-height: 50px;
+}
+
+#inputTitle {
+    width: 90%
+}
+
+#userSelectDatesContainer {
+    width: 100%;
+    background-color: darkred;
+    padding: 1% 0 1% 0;
+    text-align: center;
+    font-family: 'MedievalSharp';
+    font-size: 150%;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#userEntriesTableContainer {
+    width: 100%;
+    background-color: darkred;
+    margin-top: 1%;
+    border: 3px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#chooseStartDate, 
+#chooseFinishDate {
+    padding: 5px 0 5px 0;
+}
+
+#userEntriesTableContainerButtons {
+    display: flex;
+    justify-content: space-around;
+    margin: 1%;
+}
+
+td {
+    text-align: center;
+    width: fit-content;
+}
+
+@media (max-width: 767px) {
+    #bodyFlex {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #leftSide,
+    #rightSide {
+        width: 100%;
+        max-width: 100%;
+        flex: 1;
+    }
+}
